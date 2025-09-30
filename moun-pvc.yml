@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypvc-pod
+spec:
+  containers:
+    - name: app
+      image: busybox
+      command: ["sh", "-c", "while true; do echo $(date) >> /data/out.txt; sleep 5; done"]
+      volumeMounts:
+        - mountPath: /data
+          name: myebs
+  volumes:
+    - name: myebs
+      PersistentVolumeClaim:
+        claimName: pvc-ebs-po
